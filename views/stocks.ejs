@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stocks</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <style>
+    .space{
+      padding-right:10px;
+    }
+    .dark{
+      background-color: #1d1b23;
+    }
+    body{
+      background-color: #26242d;
+      height:753px;
+      color:#e8dddd;
+      
+    }
+    .card-footer{
+      background-color: #1d1b23;
+      margin:0;
+
+      height:60px;
+      color:#e8dddd;
+    }
+    .container{
+      height:608px;
+      padding-top: 30px;
+    }
+    .down{
+      color:red;
+    }
+    .right{
+      text-align: right;
+    }
+    h4{
+      margin-bottom: 30px;
+    }
+    .space2{
+      margin-top:90px;
+    }
+    .space3{
+      margin-top:60px;
+    }
+    button{
+      height:65px;
+      width:170px;
+      margin-top:30px;
+      margin-left:50px;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark dark">
+  <a class="navbar-brand" href="/"><i class="far fa-chart-bar"></i>  Stocks</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/allstocks">All Stocks</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/mystocks">My Stocks</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+      <% if(currentuser){ %>
+        <li class="nav-item space">
+          <a class="nav-link p-2 active">Amount <%= currentuser.amount %> $ </a>
+     </li>
+    <li class="nav-item space">
+      <a class="nav-link p-2" href="/profile/<%= currentuser.username %>"><i class="fas fa-user"></i> <%= currentuser.username %></a>
+    </li>
+    <li class="nav-item space">
+        <a class="nav-link p-2" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </li>
+    <%}else{ %>
+    <li class="nav-item space">
+      <a class="nav-link p-2" href="/login/google"><i class="fab fa-google"></i></i> Sign-in</a>
+    </li>
+    <%}%>
+ 
+  </ul>
+  </div>
+</nav>
+<hr>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h1><%= stocksdata[id]["longName"] %> </h1>
+      <div class="space2">
+        Market:
+      <h4>
+        <%=stocksdata[id]["market"] %> 
+      </h4>
+      Market Status:
+      <h4>
+        <%=stocksdata[id]["marketState"] %> 
+      </h4>
+      Exchange:
+      <h4>
+        <%=stocksdata[id]["fullExchangeName"] %> 
+      </h4>
+    </div>
+    </div>
+
+    <div class="col-sm">
+     <h4><% if(stocksdata[id]["regularMarketChange"] > 0){ %>
+        <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+      <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+          <%= stocksdata[id]["regularMarketChange"] %> $
+        </span>
+      </h4> 
+      <h4><% if(stocksdata[id]["regularMarketChangePercent"]> 0){ %>
+        <span class="up right"> + </span>
+      <% } else { %> <span class="down right">  <% } %>
+          <%=stocksdata[id]["regularMarketChangePercent"] %> %
+        </span>
+      </h4> 
+      Volume:
+      <h4>
+        <%=stocksdata[id]["regularMarketVolume"] %> 
+      </h4>
+      <div class="space3">
+        52 Week High:
+      <h4>
+        <%=stocksdata[id]["fiftyTwoWeekHigh"] %> $
+      </h4>
+      52 Week Low:
+      <h4>
+        <%=stocksdata[id]["fiftyTwoWeekLow"] %> $
+      </h4>
+      52 Week High Change:
+      <h4>
+        <%=stocksdata[id]["fiftyTwoWeekHighChange"] %> $
+      </h4>
+      52 Week Low change:
+      <h4>
+        <%=stocksdata[id]["fiftyTwoWeekLowChange"] %> $
+      </h4>
+    </div>
+
+
+
+
+
+    </div>
+
+    <div class="col-sm">
+      Current Price:
+      <h4>
+        <%=stocksdata[id]["regularMarketPrice"] %> $
+      </h4>
+      <div class="space3">
+        Day High:
+      <h4>
+        <%=stocksdata[id]["regularMarketDayHigh"] %> $
+      </h4>
+      Day Low:
+      <h4>
+        <%=stocksdata[id]["regularMarketDayLow"] %> $
+      </h4>
+      Open price:
+      <h4>
+        <%=stocksdata[id]["regularMarketOpen"] %> $
+      </h4>
+      Previous close:
+      <h4>
+        <%=stocksdata[id]["regularMarketPreviousClose"] %> $
+      </h4>
+
+      <a href= <%="/mystocks/" +id %> ><button type="button" class="btn btn-dark"><h5> Buy / Invest</h5> </button></a>
+
+      </div>
+    </div>
+  
+
+  </div>
+</div>
+
+
+
+
+<div class="card-footer ">
+  disclaimer
+</div>
+
+</body>
+</html>
+
+

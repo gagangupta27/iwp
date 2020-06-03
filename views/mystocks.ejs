@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Stocks</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <style>
+    .space{
+      padding-right:10px;
+    }
+
+  #cont{
+    margin:50px 70px;
+  }
+#graphs{
+  height:500px;
+  border-radius: 0.25rem;
+
+}
+
+.col-8{
+  padding:0 70px 0 0;
+}
+.l2{
+      background-color: #343a40;
+    }
+    .l1{
+      background-color: #171d25;
+    }
+    .card-footer{
+      background-color: #1d1b23;
+      margin:0;
+
+      height:60px;
+      color:#e8dddd;
+    }
+    .list-group-item{
+      color:#e8dddd;
+    }
+    body{
+      background-color: #26242d;
+      color:#e8dddd;
+      
+    }
+    .dark{
+      background-color: #1d1b23;
+    }
+    .down{
+      color:red;
+    }
+    .right{
+      margin-right:10px;
+      margin-left:100px;
+      text-align: right;
+    }
+    .row{
+      margin-top:80px;
+    }
+    .space8{
+      margin-bottom: 30px;
+    }
+        .btn{
+      margin-top:30px;
+    }
+    .transaction{
+      margin-top:20px;
+      border:2px solid white;
+      width:70%;
+      padding-top:10px;
+      padding-left:10px;
+      border-radius: 5px;
+      border-color: #1d1b23;
+      background-color: #1d1b23;
+    }
+    .right{
+      margin-left:110px;
+    }
+    .top{
+      margin-top:20px;
+    }
+    .btn{
+      margin-top:0;
+    }
+    .butt{
+      margin-top:30px;
+    }
+    .button1{
+      width:100px;
+    }
+    .button2{
+      margin-left:40px;
+    }
+    .middle{
+      margin-left:30px;
+    }
+ 
+
+  
+  </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark dark">
+        <a class="navbar-brand" href="/"><i class="far fa-chart-bar"></i>  Stocks</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/allstocks">All Stocks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/mystocks">My Stocks</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <% if(currentuser){ %>
+              <li class="nav-item space">
+                <a class="nav-link p-2 active">Amount <%= currentuser.amount %> $ </a>
+           </li>
+          <li class="nav-item space">
+            <a class="nav-link p-2" href="/profile/<%= currentuser.username %>"><i class="fas fa-user"></i> <%= currentuser.username %></a>
+          </li>
+          <li class="nav-item space">
+              <a class="nav-link p-2" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </li>
+          <%}else{ %>
+          <li class="nav-item space">
+            <a class="nav-link p-2" href="/login/google"><i class="fab fa-google"></i></i> Sign-in</a>
+          </li>
+          <%}%>
+
+        </ul>
+        </div>
+      </nav>
+<hr>
+
+<div id="cont">
+  <div class="row">
+    <div class="col-8">
+      <div id="graphs">
+        <h3 class="space8" >All Transactions</h3>
+        <ul type="none">
+          <% currentuser.transaction.forEach(function(item){ %>
+            <li class="transaction">
+              <% if(item.buysell==1){ %>
+             <h5>
+              <%= item.number %> Qty. <span><%= item.company %></span> <span class="right">Buying Price: <%=item.buyingprice %>$</span>
+              <p class="top"><span class="top">Date: <%= item.dateofbuy %> </span> <span class="right"><a href=<%="/mystocks/" + item.name + "/sell/" + item._id %>><button type="button" class="btn btn-dark button1"><h5> Sell </h5></button></a></span></p>
+
+             </h5>
+             <% }else{ %>
+              <h5>
+                <%= item.number %> Qty. <span class="middle"><%= item.company %></span> <span class="right">Buying Price: <%=item.buyingprice %>$</span>
+                <p class="top"><span class="top">Date: <%= item.dateofbuy %> </span> <span><button type="button" class="btn btn-dark disabled button2"><h5> Sold on <%=item.dateofsale %></h5></button></span></p>
+
+               </h5>
+              <%} %>
+            </li>
+          <% }); %>
+      </ul>
+         
+      </div>
+    </div>
+    <div class="col-4">
+        <div class="list-group">
+          <h3 class="space8"> My Holdings</h3>
+          <% for(var i=0;i<currentuser.stocks.length ;i++){ %>
+          <a href="/mystocks/<%= currentuser.stocks[i].name %>" class="list-group-item list-group-item-action l1"> 
+            <%= stocksdata[currentuser.stocks[i].name]["longName"] %>
+  
+            <% if(stocksdata[currentuser.stocks[i].name]["regularMarketChange"] > 0){ %>
+              <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+            <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+                <%= stocksdata[currentuser.stocks[i].name]["regularMarketChange"] %>
+              </span>
+          </a>
+          <% } %>
+
+
+        </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+</body>
+</html>
+
+

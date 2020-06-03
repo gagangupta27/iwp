@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Stocks</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <style>
+    .space{
+      padding-right:10px;
+    }
+  #button{
+      margin:30px 0;
+    }
+  #cont{
+    margin:50px 70px;
+  }
+  #graphs{
+  height:500px;
+  border-radius: 0.25rem;
+
+  }
+
+  .col-8{
+  padding:0 70px 0 0;
+}
+
+    .card-footer{
+      background-color: #1d1b23;
+      color:#e8dddd;
+      margin-top:200px;
+    }
+    .list-group-item{
+      color:#e8dddd;
+    }
+    body{
+      background-color: #26242d;
+      color:#e8dddd;
+
+      
+    }
+    .dark{
+      background-color: #1d1b23;
+    }
+    .down{
+      color:red;
+    }
+    .right{
+      margin-right:10px;
+      margin-left:100px;
+      text-align: right;
+    }
+    .row{
+      margin-top:80px;
+    }
+    h2{
+      margin-top:50px;
+    }
+    .space5{
+      margin-top:30px;
+    }
+    .space6{
+      margin-left:10px;
+      margin-right: 10px;
+    }
+    .space7{
+      margin-top:30px;
+    }
+    .btn{
+      margin-top:30px;
+    }
+    .transaction{
+      margin-top:20px;
+      border:2px solid white;
+      width:70%;
+      padding-top:10px;
+      padding-left:10px;
+      border-radius: 5px;
+      border-color: #1d1b23;
+      background-color: #1d1b23;
+    }
+    .right{
+      margin-left:200px;
+    }
+    .top{
+      margin-top:20px;
+    }
+    .btn{
+      margin-top:0;
+    }
+    .butt{
+      margin-top:30px;
+    }
+    .button1{
+      width:100px;
+    }
+    .button2{
+      margin-left:40px;
+    }
+    .butt2{
+      margin-top:30px;
+      margin-left:30px;
+    }
+    .butt3{
+      margin-top:20px;
+    }
+
+  </style>
+
+    
+
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark dark">
+        <a class="navbar-brand" href="/"><i class="far fa-chart-bar"></i>  Stocks</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/allstocks">All Stocks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/mystocks">My Stocks</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <% if(currentuser){ %>
+              <li class="nav-item space">
+                <a class="nav-link p-2 active">Amount <%= currentuser.amount %> $ </a>
+           </li>
+          <li class="nav-item space">
+            <a class="nav-link p-2" href="/profile/<%= currentuser.username %>"><i class="fas fa-user"></i> <%= currentuser.username %></a>
+          </li>
+          <li class="nav-item space">
+              <a class="nav-link p-2" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </li>
+          <%}else{ %>
+          <li class="nav-item space">
+            <a class="nav-link p-2" href="/login/google"><i class="fab fa-google"></i></i> Sign-in</a>
+          </li>
+          <%}%>
+
+        </ul>
+        </div>
+      </nav>
+<hr>
+
+<div id="cont">
+  <div class="row">
+    <div class="col-8">
+      <div id="graphs">
+         <h3>Previous Transactions</h3>
+        <ul type="none">
+            <% currentuser.transaction.forEach(function(item){ %>
+              <% if(item.name==id){ %>
+              <li class="transaction">
+                <% if(item.buysell==1){ %>
+               <h5>
+                <%= item.number %> Qty. <span class="right">Buying Price: <%=item.buyingprice %>$</span>
+                <p class="top"><span class="top">Date: <%= item.dateofbuy %> </span> <span class="right"><a href=<%="/mystocks/" + id + "/sell/" + item._id %>><button type="button" class="btn btn-dark button1"><h5> Sell </h5></button></a></span></p>
+
+               </h5>
+               <% }else{ %>
+                <h5>
+                  <%= item.number %> Qty. <span class="right">Buying Price: <%=item.buyingprice %>$</span>
+                  <p class="top"><span class="top">Date: <%= item.dateofbuy %> </span> <span><button type="button" class="btn btn-dark disabled button2"><h5> Sold on <%=item.dateofsale %></h5></button></span></p>
+  
+                 </h5>
+                <%} %>
+              </li>
+              <% } %>
+            <% }); %>
+        </ul>
+      </div>
+    </div>
+    <div class="col-4">
+      <h1><%= stocksdata[id]["longName"] %> </h1>
+      <h4><% if(stocksdata[id]["regularMarketChange"] > 0){ %>
+        <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+      <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+          <%= stocksdata[id]["regularMarketChange"] %> $
+        </span>
+      </h4> 
+      <h4><% if(stocksdata[id]["regularMarketChangePercent"]> 0){ %>
+        <span class="up right"> + </span>
+      <% } else { %> <span class="down right">  <% } %>
+          <%=stocksdata[id]["regularMarketChangePercent"] %> %
+        </span>
+      </h4> 
+
+      <p class="space5"><h3>Current Price:</h3></p>
+      <h4>
+        <%=stocksdata[id]["regularMarketPrice"] %> $
+      </h4>
+
+      <%      
+              var flag=-1;
+              for (var i=0; i < currentuser.stocks.length; i++) {
+              if (currentuser.stocks[i].name == id) {
+                flag=i;
+                break;
+              }
+              }
+
+              if(flag===-1){
+                currentuser.stocks.push({name:id,number:0,profit:0})
+                i=currentuser.stocks.length-1;
+                currentuser.save();
+              } %>
+          <h4 class="space7">Number of shares purchased</h4>
+        <h3><span class="space6"><%= currentuser.stocks[i].number %></span></h3>
+            <button id="b1" type="button" class="btn btn-dark butt" onclick="myfunction()"><h5>Buying 1</h5></button>
+             <a id="buy" href=<%=" /mystocks/" +id +"/buy/1" %>  ><button type="button" class="btn btn-dark btn-lg butt2"><h5>Complete Transaction</h5></button></a> 
+                           
+             <% period1=1;
+                period2=2; 
+                
+                var today = new Date();
+
+                var myDate = today.getDate() + '-' + (today.getMonth()+1) + '-' + today.getFullYear();
+                myDate = myDate.split("-");
+                var newDate = myDate[1]+"/"+myDate[0]+"/"+myDate[2];
+                var date2 = new Date(newDate).getTime().toString();
+                period1 = date2.slice(0,10);
+
+                var myDate2 = today.getDate() + '-' + (today.getMonth()+1) + '-' + (today.getFullYear()-1);
+                myDate2 = myDate2.split("-");
+                var newDate2 = myDate2[1]+"/"+myDate2[0]+"/"+myDate2[2];
+                var date3 = new Date(newDate2).getTime().toString();
+                period2 = date3.slice(0,10);
+
+
+              
+
+                %>
+              <p><a id="predict" href=<%= " /mystocks/" + id + "/" + stocksdata[id]["symbol"] + "/" +  period1 + "/" + period2 + "/predict"  %>  ><button type="button" class="btn btn-dark btn-lg butt" onclick="myfunction2()"><h5> Predict Values </h5></button></a> </p>
+              <% if(data!=1){ %>
+              <button type="button" class="btn btn-dark btn-lg butt3"><h5><%= data %></h5></button>
+              <% } %>
+              
+              
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="card-footer ">
+  disclaimer
+</div>
+<script type="text/javascript">
+  var flag2=1;
+	function myfunction(){
+    flag2+=1;
+    document.getElementById("b1").innerHTML="<h5> Buying " + flag2 + "</h5>";
+    document.getElementById("buy").setAttribute("href", "/mystocks/"+"<%= id %>"+"/buy/"+flag2);
+  }
+  function myfunction2(){
+    period1=1;
+    period2=2;
+    document.getElementById("buy").setAttribute("href"," /mystocks/" + id + "/" + stocksdata[id]["symbol"] + "/" +  period1 + "/" + period2 + "/predict" );
+  }
+</script>
+
+
+</body>
+
+</html>
+
+
+
+
+

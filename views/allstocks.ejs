@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Allstocks</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <style>
+    .space{
+      padding-right:10px;
+    }
+    .card1{
+      width:20%;
+      border:1px solid rgba(0,0,0,.125);
+      border-radius:0.25rem;
+      margin:10px;
+      margin-top:30px;
+    }
+    .img{
+      padding:3px;
+      width:100%;
+      height:250px;
+    }
+    .header{
+      padding-top:20px;
+    }
+    
+    .cont{
+      margin:50px 150px 50px 150px;
+
+    }
+    .coll{
+      
+      margin:0 20px;
+      margin-right: 150px;
+      padding:0;
+    }
+    .l2{
+      background-color: #343a40;
+    }
+    .l1{
+      background-color: #171d25;
+    }
+    .card-footer{
+      background-color: #1d1b23;
+      margin:0;
+
+      height:60px;
+      color:#e8dddd;
+    }
+    .list-group-item{
+      color:#e8dddd;
+    }
+    body{
+      background-color: #26242d;
+      
+    }
+    .dark{
+      background-color: #1d1b23;
+    }
+    .down{
+      color:red;
+    }
+    .right{
+
+      margin-right:10px;
+      margin-left:100px;
+      text-align: right;
+    }
+    a{
+      height:50px;
+    }
+
+
+
+  </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark dark">
+        <a class="navbar-brand" href="/"><i class="far fa-chart-bar"></i>  Stocks</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="/allstocks">All Stocks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/mystocks">My Stocks</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+            <% if(currentuser){ %>
+              <li class="nav-item space">
+                <a class="nav-link p-2 active">Amount <%= currentuser.amount %> $ </a>
+           </li>
+          <li class="nav-item space">
+            <a class="nav-link p-2" href="/profile/<%= currentuser.username %>"><i class="fas fa-user"></i> <%= currentuser.username %></a>
+          </li>
+          <li class="nav-item space">
+              <a class="nav-link p-2" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </li>
+          <%}else{ %>
+          <li class="nav-item space">
+            <a class="nav-link p-2" href="/login/google"><i class="fab fa-google"></i></i> Sign-in</a>
+          </li>
+          <%}%>
+       
+        </ul>
+        </div>
+      </nav>
+
+<div id="main-body">
+<div class="cont">
+  <div class="row">
+    <div class="col-sm coll">
+      <div class="list-group">
+
+
+        <a href="/allstocks/0" class="list-group-item list-group-item-action l1"> 
+          APPLE 
+
+          <% if(stocksdata[0]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[0]["regularMarketChange"] %>
+            </span>
+        </a>
+
+
+        <a href="/allstocks/1" class="list-group-item list-group-item-action l1"> 
+          GOOGLE
+
+          <% if(stocksdata[1]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[1]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/2" class="list-group-item list-group-item-action l1"> 
+          MICROSOFT
+
+          <% if(stocksdata[2]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[2]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/3" class="list-group-item list-group-item-action l1"> 
+          UBER
+
+          <% if(stocksdata[3]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[3]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/4" class="list-group-item list-group-item-action l1"> 
+          MORGAN STANLEY
+
+          <% if(stocksdata[4]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[4]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/5" class="list-group-item list-group-item-action l1"> 
+          AMAZON
+
+          <% if(stocksdata[5]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[5]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/6" class="list-group-item list-group-item-action l1"> 
+          TEXAS INSTRUMENTS
+
+          <% if(stocksdata[6]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[6]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/7" class="list-group-item list-group-item-action l1"> 
+          NINTENDO
+
+          <% if(stocksdata[7]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[7]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/8" class="list-group-item list-group-item-action l1"> 
+          AMARIN CORPORATION
+
+          <% if(stocksdata[8]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[8]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/9" class="list-group-item list-group-item-action l1"> 
+          KROGER
+
+          <% if(stocksdata[9]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[9]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/10" class="list-group-item list-group-item-action l1"> 
+          McKESSON
+
+          <% if(stocksdata[10]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[10]["regularMarketChange"] %>
+            </span>
+        </a>
+
+      </div>
+
+
+    </div>
+    <div class="col-sm coll">
+      <div class="list-group">
+        <a href="/allstocks/11" class="list-group-item list-group-item-action l1"> 
+          PHILLIPS 66
+
+          <% if(stocksdata[11]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[11]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/12" class="list-group-item list-group-item-action l1"> 
+          WALMART
+
+          <% if(stocksdata[12]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[12]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/13" class="list-group-item list-group-item-action l1"> 
+          JOHNSON & JOHNSON
+
+          <% if(stocksdata[13]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[13]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/14" class="list-group-item list-group-item-action l1"> 
+          AT&T
+
+          <% if(stocksdata[14]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[14]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/15" class="list-group-item list-group-item-action l1"> 
+          FORD MOTORS
+
+          <% if(stocksdata[15]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[15]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/16" class="list-group-item list-group-item-action l1"> 
+          DELL
+
+          <% if(stocksdata[16]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[16]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/17" class="list-group-item list-group-item-action l1"> 
+          IBM
+
+          <% if(stocksdata[17]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[17]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/18" class="list-group-item list-group-item-action l1"> 
+          PEPSICO
+
+          <% if(stocksdata[18]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[18]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/19" class="list-group-item list-group-item-action l1"> 
+          INTEL
+
+          <% if(stocksdata[19]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[19]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/20" class="list-group-item list-group-item-action l1"> 
+          BANK OF AMERICA
+
+          <% if(stocksdata[20]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[20]["regularMarketChange"] %>
+            </span>
+        </a>
+        <a href="/allstocks/21" class="list-group-item list-group-item-action l1"> 
+          GENERAL ELECTRIC
+
+          <% if(stocksdata[21]["regularMarketChange"] > 0){ %>
+            <span class="up right"></span> <i class="fas fa-caret-up"></i> 
+          <% } else { %> <span class="down right"><i class="fas fa-caret-down"></i> <% } %>
+              <%= stocksdata[21]["regularMarketChange"] %>
+            </span>
+        </a>
+      </div>
+
+    </div>
+    
+  </div>
+</div>
+</div>
+<div class="card-footer ">
+  disclaimer
+</div>
+
+
+</body>
+</html>
+
+

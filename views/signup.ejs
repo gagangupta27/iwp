@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>shows</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <style>
+  .space{
+      padding-right:10px;
+    }
+      .input{
+      width:60%;
+    }
+    .form{
+      width:40%;
+      padding:20px 40px;
+    }
+    .title{
+      text-align:center;
+    }
+    .form1{
+      padding:30px 0 10px 70px;
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/">Shows</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/allshows">All Shows</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/newpost">New post</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+    <form class="form-inline my-2 my-lg-0 space" action="/results" method="POST">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <% if(!currentuser){ %>
+    <li class="nav-item active space">
+      <a class="nav-link p-2" href="/signup"><i class="fas fa-user-plus"></i> Sign-up</a>
+    </li>
+    <li class="nav-item space">
+      <a class="nav-link p-2" href="/login"><i class="fas fa-sign-in-alt"></i> login</a>
+    </li>
+    <% }else{ %>
+    <li class="nav-item space">
+      <a class="nav-link p-2" href="/profile/<%= currentuser.name %>"><i class="far fa-user"></i> <%= currentuser.name %></a>
+    </li>
+    <li class="nav-item space">
+      <a class="nav-link p-2" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </li>
+      <% } %>
+  </ul>
+  </div>
+</nav>
+<hr>
+
+
+
+<div class="container form ">
+
+ <% if(typeof errors!='undefined'){ %>
+    <% errors.forEach(function(error){ %>
+      <div class="alert alert-warning alert-dismissible">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+       <%= error.msg %>
+      </div>
+      
+  <% }); %>
+<% } %>
+
+<form action="/signup" method="POST" class="form1">
+  <h1>Sign up!!</h1>
+    <div class="form-group">
+      <label for="name"><strong>Name:</strong></label>
+      <input type="text" class="form-control input" id="name" name="name" value="<%= typeof name != 'undefined' ? name : '' %>">
+    </div>
+   <div class="form-group">
+      <label for="username"><strong>email:</strong></label>
+      <input type="text" class="form-control input" id="username" name="username" value="<%= typeof username != 'undefined' ? username : '' %>">
+    </div>
+    <div class="form-group">
+      <label for="password"><strong>password:</strong></label>
+      <input type="password" class="form-control input" id="password" name="password" value="<%= typeof password != 'undefined' ? password : '' %>">
+    </div>
+        <div class="form-group">
+      <label for="password2"><strong>confirm password:</strong></label>
+      <input type="password" class="form-control input" id="password2" name="password2"  value="<%= typeof password2 != 'undefined' ? password2 : '' %>">
+    </div>
+     <div id=button>
+    <button class="btn btn-success btn-lg submit">sign-up</button>
+    </div>
+    <p>Have An Account? <a href="/login">Login</a></p>
+</form>
+
+</div>
+
+</body>
+</html>
+
+
